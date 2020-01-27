@@ -26,10 +26,12 @@ library(here)  # install.packages("here")
 ```{r read-data}
 
 ca_np <- read_csv(here("data/ca_np.csv"))
+ci_np <- read_excel(here("data", "ci_np.xlsx"))
 # also be written:
-ca_np <- read_csv("data/ca_np.csv")
-
+# ca_np <- read_csv("data/ca_np.csv")
 
 
 ```
+
+
 
