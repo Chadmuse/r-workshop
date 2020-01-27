@@ -1,0 +1,8 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+# Plotswith ggplot2
+
+We are going to make plots in R using the ggplot2 package from the tidyverse.   
