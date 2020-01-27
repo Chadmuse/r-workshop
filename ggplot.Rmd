@@ -35,3 +35,64 @@ ci_np <- read_excel(here("data", "ci_np.xlsx"))
 
 
 
+### make my own first graph
+#### different size header
+
+We're going to make a line plot of year (x-var) vs. visitors (y-var) in ggplot
+command + option/alt + i
+
+```{r}
+# trying ggplot2 with channel islands
+ggplot(data = ci_np, aes(x= year, y = visitors)) + 
+  geom_area()
+
+# updata the geom to geom_point(), geom_col(), geom_area()
+```
+
+making a base layer for my channel islands plots:
+
+```{r}
+gg_base <- ggplot(data = ci_np, aes(x= year, y = visitors))
+gg_base + geom_point()
+```
+
+
+### now let's start customizing
+- line/point colors: color
+- change line type: linetype
+- change point style: pch
+- change transparency: alpha
+
+```{r}
+gg_base + 
+  geom_line(
+    color = "purple",
+    linetype = "dashed"
+    
+  )
+```
+
+
+activity: creat a ggplot scatterplot (geom_point) that has triangle symbols (hint: ?pch) of a non-default size (size = #) and that are an updated color.
+
+```{r}
+gg_base + 
+  geom_point(
+    color = "red", 
+    pch = 2,
+    size = 4
+  )
+```
+
+### update graph aesthetics based on variables
+
+```{r}
+gg_base + 
+  geom_point(
+    aes(size = visitors, 
+        color = year),
+    pch = 10
+  )
+```
+
+
