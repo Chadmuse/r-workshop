@@ -1,0 +1,84 @@
+---
+title: "Pivot Lobsters"
+author: me
+output: html_document
+---
+
+Attaching our packages and reading in data
+
+```{r}
+library(tidyverse)
+library(readxl)
+library(here)
+library(skimr) # install.packages("skimr")
+
+library(kableExtra) # install.packages("kableExtra")
+
+# read in lobster data
+lobsters <- read_xlsx(here("data", "lobsters.xlsx"),
+                      skip = 4)
+```
+
+viewing our data with skimr
+
+```{r}
+# these are equivalent
+skimr::skim(lobsters)
+skim(lobsters)
+```
+
+
+# pivot tables 
+in r, pivot tables are: `group_by() %>% summarize()`
+
+
+```{r}
+lobsters %>% 
+  group_by(year) %>% 
+  summarize(count_by_year = n())
+
+lobsters %>% 
+  group_by(site,year) %>% 
+  summarize(count_by_site_year = n())
+```
+
+
+Summarize by multiple variables
+and save as an object
+```{r}
+siteyear_summary <- lobsters %>% 
+  group_by(site, year) %>% 
+  summarize(count_by_site_year = n(), 
+            mean_size_mm = mean(size_mm, na.rm = TRUE),
+            sd_size_mm = sd(size_mm, na.rm = TRUE))
+  
+```
+
+
+Table formatting with kableExtra::kable()
+```{r}
+siteyear_summary %>% 
+  kable()
+```
+
+
+There are `r nrow(lobsters)` total lobsters included in this report.
+
+
+## activity
+
+```{r}
+siteyear_summary <- lobsters %>% 
+  group_by(site, year) %>% 
+  summarize(count_by_site_year = n(), 
+            median_size_mm = median(size_mm, na.rm = TRUE),
+            sd_size_mm = sd(size_mm, na.rm = TRUE))
+
+
+ggplot(data = siteyear_summary, aes(x= year, y = median_size_mm, color = site)) +
+  geom_line()
+ggsave(here("figures", "lobsters-plot.png"))
+  
+```
+
+
